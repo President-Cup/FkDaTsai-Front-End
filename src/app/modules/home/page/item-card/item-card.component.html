@@ -1,1 +1,19 @@
-<p>item-card works!</p>
+<mat-card>
+
+    <ng-container *ngIf="item; else loading">
+        <img mat-card-image
+             src="{{ item.profile }}">
+        <mat-card-content>
+            <p> {{ item.location}} </p>
+            <p> {{ item.price }} / day </p>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button> favorite </button>
+        </mat-card-actions>
+    </ng-container>
+
+    <ng-template #loading>
+        <mat-spinner></mat-spinner>
+    </ng-template>
+
+</mat-card>
