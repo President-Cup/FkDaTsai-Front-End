@@ -14,22 +14,25 @@
 
 <body>
     <mat-sidenav-container style="min-height:100%">
-        
+
         <mat-sidenav #sideNav
-                     mode="side">
+                     [mode]="'side'">
             <mat-nav-list>
-                <mat-list-item>
+                <a mat-list-item
+                   [routerLink]="'/home'">
                     <mat-icon matListIcon> home </mat-icon>
                     首頁
-                </mat-list-item>
-                <mat-list-item>
+                </a>
+                <a mat-list-item
+                   [routerLink]="'/likes'">
                     <mat-icon matListIcon> favorite </mat-icon>
                     追蹤清單
-                </mat-list-item>
-                <mat-list-item>
+                </a>
+                <a mat-list-item
+                   [routerLink]="'/upload'">
                     <mat-icon matListIcon> file_upload </mat-icon>
                     出租物品
-                </mat-list-item>
+                </a>
             </mat-nav-list>
         </mat-sidenav>
 
