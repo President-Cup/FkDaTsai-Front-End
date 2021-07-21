@@ -11,4 +11,8 @@ export class ItemService {
   async fetchItem(itemId: number): Promise<Item> {
     return new Promise<Item>((resolve, reject) => { })
   }
+
+  async listItemIdByCategory(main: string, minor: string): Promise<number[]> {
+    return new Promise<number[]>((resolve, reject) => { });
+  }
 }
