@@ -4,7 +4,7 @@ import { ItemService } from '@data/service/item.service';
 import { Item } from '@data/types/item';
 
 @Component({
-  selector: 'app-item-card[itemId]',
+  selector: 'app-item-card [itemId]',
   templateUrl: './item-card.component.html',
   styleUrls: ['./item-card.component.scss']
 })

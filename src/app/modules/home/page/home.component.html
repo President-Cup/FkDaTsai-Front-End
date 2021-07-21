@@ -1,1 +1,35 @@
-<p>home works!</p>
+<mat-tab-group (selectedTabChange)="updateMainCategoryName($event.tab.textLabel)">
+
+    <mat-tab *ngFor="let main of category_names.keys()"
+             [label]="main">
+
+        <mat-select (selectionChange)="updateMinorCategoryName($event.source.value)">
+            <mat-option *ngFor="let minor of category_names.get(main)"
+                        [value]="minor">
+                {{ minor }}
+            </mat-option>
+        </mat-select>
+
+        <ng-container *ngIf="displayList; else loading">
+            <div fxLayout="raw warp">
+                <app-item-card *ngFor="let itemId of itemIdList"
+                               [itemId]="itemId">
+                </app-item-card>
+            </div>
+        </ng-container>
+
+        <ng-template #loading>
+            <mat-spinner></mat-spinner>
+        </ng-template>
+
+        <footer>
+            <mat-paginator [length]="itemIdList.length"
+                           [pageSize]="30"
+                           [pageSizeOptions]="[5,10,20,30]"
+                           (page)="updateDisplayList($event)">
+            </mat-paginator>
+        </footer>
+
+    </mat-tab>
+
+</mat-tab-group>
