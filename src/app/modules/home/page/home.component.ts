@@ -12,6 +12,7 @@ import { ItemService } from '@data/service/item.service';
 })
 export class HomeComponent implements OnInit {
   category_names = CATEGORY_NAME;
+  category_name_keys = this.category_names.keys();
 
   main_category_name = '';
   minor_category_name = '';

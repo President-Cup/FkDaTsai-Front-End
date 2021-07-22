@@ -1,6 +1,6 @@
 <mat-tab-group (selectedTabChange)="updateMainCategoryName($event.tab.textLabel)">
 
-    <mat-tab *ngFor="let main of category_names.keys()"
+    <mat-tab *ngFor="let main of category_name_keys"
              [label]="main">
 
         <mat-select (selectionChange)="updateMinorCategoryName($event.source.value)">
