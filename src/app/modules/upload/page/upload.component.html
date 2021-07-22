@@ -1,1 +1,56 @@
-<p>upload works!</p>
+<mat-stepper [linear]="true"
+             [orientation]="'vertical'">
+
+    <mat-step label="選擇類別">
+        <form [formGroup]="formGroup">
+            <mat-form-field floatLabel="auto"
+                            hideRequiredMarker="true">
+                <mat-select required
+                            placeholder="類別"
+                            formControlName="category">
+                    <mat-optgroup *ngFor="let main of category_name_keys"
+                                  [label]="main">
+                        <mat-option *ngFor="let minor of category_names.get(main)"
+                                    [value]="minor">
+                            {{ minor }}
+                        </mat-option>
+                    </mat-optgroup>
+                </mat-select>
+            </mat-form-field>
+        </form>
+    </mat-step>
+
+    <mat-step label="價格">
+        <form [formGroup]="formGroup">
+            <mat-form-field floatLabel="never"
+                            hideRequiredMarker="true">
+                <span matPrefix> NT$&nbsp; </span>
+                <input matInput
+                       required
+                       type="number"
+                       formControlName="price">
+                <span matSuffix> / 天 </span>
+            </mat-form-field>
+        </form>
+    </mat-step>
+
+    <mat-step label="地址">
+        <form [formGroup]="formGroup">
+            <mat-form-field floatLabel="never"
+                            hideRequiredMarker="true">
+                <input matInput
+                       required
+                       type="text"
+                       formControlName="address">
+            </mat-form-field>
+        </form>
+    </mat-step>
+
+    <mat-step label="確認上傳資訊">
+        <span> 類別: {{ formGroup.value["category"] }} </span>
+        <span> 價格: {{ formGroup.value["price"] }} / 天 </span>
+        <span> 地址: {{ formGroup.value["address"] }} </span>
+        <button mat-raised-button> 確認並上傳商品 </button>
+    </mat-step>
+
+</mat-stepper>
