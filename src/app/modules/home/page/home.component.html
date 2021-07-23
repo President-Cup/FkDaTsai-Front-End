@@ -1,16 +1,18 @@
-<mat-tab-group (selectedTabChange)="updateMainCategoryName($event.tab.textLabel)">
+<mat-tab-group [selectedIndex]="0"
+               (selectedTabChange)="updateCategory($event.tab.textLabel, undefined)">
 
-    <mat-tab *ngFor="let main of category_name_keys"
+    <mat-tab *ngFor="let main of categoryService.getPrimaryCategory()"
              [label]="main">
 
-        <mat-select (selectionChange)="updateMinorCategoryName($event.source.value)">
-            <mat-option *ngFor="let minor of category_names.get(main)"
+        <mat-select [value]="categoryName[1]"
+                    (selectionChange)="updateCategory(undefined, $event.source.value)">
+            <mat-option *ngFor="let minor of categoryService.getSecondaryCategory(main)"
                         [value]="minor">
                 {{ minor }}
             </mat-option>
         </mat-select>
 
-        <ng-container *ngIf="displayList; else loading">
+        <ng-container *ngIf="!isLoading; else loading">
             <div fxLayout="raw warp">
                 <app-item-card *ngFor="let itemId of itemIdList"
                                [itemId]="itemId">
@@ -22,13 +24,11 @@
             <mat-spinner></mat-spinner>
         </ng-template>
 
-        <footer>
-            <mat-paginator [length]="itemIdList.length"
-                           [pageSize]="30"
-                           [pageSizeOptions]="[5,10,20,30]"
-                           (page)="updateDisplayList($event)">
-            </mat-paginator>
-        </footer>
+        <mat-paginator #paginator
+                       [length]="numOfItems"
+                       [pageSize]="10"
+                       [pageSizeOptions]="[5,10,20,30]">
+        </mat-paginator>
 
     </mat-tab>
 

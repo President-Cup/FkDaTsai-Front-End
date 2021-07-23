@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
-import { CATEGORY_NAME } from '@core/constants/category-name';
+import { CategoryService } from '@data/service/category.service';
 import { ItemService } from '@data/service/item.service';
 
 @Component({
@@ -10,41 +10,52 @@ import { ItemService } from '@data/service/item.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
-  category_names = CATEGORY_NAME;
-  category_name_keys = this.category_names.keys();
+export class HomeComponent implements AfterViewInit {
+  @ViewChild('paginator') paginator!: MatPaginator;
 
-  main_category_name = '';
-  minor_category_name = '';
+  categoryName: [string, string];
 
+  isLoading = true;
+  numOfItems = 0;
   itemIdList: number[] = [];
-  displayList: number[] = [];
 
-  constructor(private itemService: ItemService) { }
-
-  ngOnInit(): void {
+  constructor(
+    public categoryService: CategoryService,
+    private itemService: ItemService
+  ) {
+    let defaultPrimaryCategory = this.categoryService.getPrimaryCategory()[0];
+    let defaultSecondaryCategory = this.categoryService.getSecondaryCategory(defaultPrimaryCategory)[0];
+    this.categoryName = [defaultPrimaryCategory, defaultSecondaryCategory];
   }
 
-  updateMainCategoryName(name: string): void {
-    this.main_category_name = name;
-    console.log(`updateMainCategoryName ${name}`);
-    this.updateItemIdList()
+  ngAfterViewInit(): void {
+    this.updateItemIdList(0, this.paginator.pageSize);
+    this.paginator.page.subscribe((page: PageEvent) => {
+      this.updateItemIdList(page.pageIndex, page.pageSize);
+    });
+
   }
 
-  updateMinorCategoryName(name: string): void {
-    this.minor_category_name = name;
-    console.log(`updateMinorCategoryName ${name}`);
-    this.updateItemIdList()
+  updateCategory(primary?: string, secondary?: string) {
+    if (primary) {
+      this.categoryName[0] = primary;
+    } else if (secondary) {
+      this.categoryName[1] = secondary;
+    }
+
+    console.log('this.categoryName', this.categoryName);
+
+    this.itemService.fetchNumberOfItems(this.categoryName)
+      .then((values) => this.numOfItems = values)
+      .then(() => this.updateItemIdList(0, this.paginator.pageSize));
   }
 
-  updateItemIdList() {
-    this.itemService.listItemIdByCategory(this.main_category_name, this.minor_category_name)
-      .then((result) => { this.itemIdList = result; });
-  }
-
-  updateDisplayList(pe: PageEvent) {
-    let begin = pe.pageIndex * pe.pageSize;
-    let end = begin + pe.pageSize;
-    this.displayList = this.itemIdList.slice(begin, end);
+  updateItemIdList(pageIndex: number, pageSize: number) {
+    this.itemService.fetchItemIdList(this.categoryName, pageIndex, pageSize)
+      .then((data) => this.itemIdList = data)
+      .finally(() => {
+        console.log('this.itemIdList', this.itemIdList);
+        this.isLoading = false;
+      });
   }
 }
