@@ -8,8 +8,8 @@ export class Item {
         readonly ownerId: number,
         readonly itemId: number,
         readonly categoryId: {
-            main: number,
-            minor: number
+            primary: number,
+            secondary: number
         },
         readonly pictures: readonly URL[],
         readonly location: string,
