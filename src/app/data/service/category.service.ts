@@ -18,7 +18,7 @@ export class CategoryService {
 
   constructor(private http: HttpClient) { }
 
-  async fetchCategory(): Promise<JSON> {
+  async fetchCategory(): Promise<any> {
     return this.http.get<JSON>(this.categoryUrl)
       .toPromise()
       .then((data) => this.category = data);
