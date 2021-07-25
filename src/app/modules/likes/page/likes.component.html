@@ -1,1 +1,41 @@
-<p>likes works!</p>
+<mat-table *ngIf="!isLoading; else loading"
+           #matTable
+           [dataSource]="dataSource">
+
+    <ng-container matColumnDef="category">
+        <mat-header-cell *matHeaderCellDef> 種類 </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            {{ element.primary }} - {{ element.secondary }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+        <mat-header-cell *matHeaderCellDef> 價格 </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            {{ element.price }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="location">
+        <mat-header-cell *matHeaderCellDef> 地點 </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            {{ element.location }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="operation">
+        <mat-header-cell *matHeaderCellDef> 操作 </mat-header-cell>
+        <mat-cell *matCellDef="let i = index">
+            <button mat-button> 詳細 </button>
+            <button mat-button
+                    (click)="removeRow(i)"> 取消追蹤 </button>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="['category','price','location','operation']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['category','price','location','operation'];"></mat-row>
+</mat-table>
+
+<ng-template #loading>
+    <mat-progress-spinner></mat-progress-spinner>
+</ng-template>
