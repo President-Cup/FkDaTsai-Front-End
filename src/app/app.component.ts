@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from '@data/service/category.service';
+import { LikesListService } from '@data/service/likes-list.service';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private categoryService: CategoryService,
+    public likesListService: LikesListService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
@@ -29,9 +31,6 @@ export class AppComponent implements OnInit {
         this.isLoading = false;
         this.router.navigate(['home'], { relativeTo: this.route });
       });
-      // TODO: Add a page for error.
-
+    // TODO: Add a page for error.
   }
-
-
 }

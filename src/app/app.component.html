@@ -28,7 +28,9 @@
                 </a>
                 <a mat-list-item
                    [routerLink]="'/likes'">
-                    <mat-icon matListIcon> favorite </mat-icon>
+                    <mat-icon matListIcon
+                              [matBadge]="this.likesListService.likesList.length"
+                              > favorite </mat-icon>
                     追蹤清單
                 </a>
                 <a mat-list-item
