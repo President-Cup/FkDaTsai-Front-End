@@ -1,0 +1,60 @@
+<mat-tab-group>
+
+    <mat-tab [label]="'登錄'">
+
+        <mat-form-field appearance="fill">
+            <mat-label> E-mail </mat-label>
+            <input #signEmail
+                   matInput
+                   type="email">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label> 密碼 </mat-label>
+            <input #signPassword
+                   matInput
+                   type="password">
+        </mat-form-field>
+
+        <mat-dialog-actions>
+            <button mat-raised-button
+                    (click)="onSignInClick(signEmail.value, signPassword.value, $event.target)"> 登錄 </button>
+            <button mat-button
+                    mat-dialog-close> 取消 </button>
+        </mat-dialog-actions>
+
+    </mat-tab>
+
+    <mat-tab [label]="'註冊'">
+
+        <mat-form-field appearance="fill">
+            <mat-label> 使用者名稱 </mat-label>
+            <input #regName
+                   matInput>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label> E-mail </mat-label>
+            <input #regEmail
+                   matInput
+                   type="email">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label> 密碼 </mat-label>
+            <input #regPassword
+                   matInput
+                   type="password">
+        </mat-form-field>
+
+        <mat-dialog-actions>
+            <button mat-raised-button
+                    (click)="onRegisterClick(regName.value, regEmail.value, regPassword.value, $event.target)"> 註冊
+            </button>
+            <button mat-button
+                    mat-dialog-close> 取消 </button>
+        </mat-dialog-actions>
+
+    </mat-tab>
+
+</mat-tab-group>

@@ -6,9 +6,7 @@
         </button>
         <strong> 錙銖必較 </strong>
         <span style="flex: 1 1 auto;"></span>
-        <button mat-icon-button>
-            <mat-icon> login </mat-icon>
-        </button>
+        <app-account></app-account>
     </mat-toolbar>
     <mat-progress-bar *ngIf="isLoading"
                       [mode]="'indeterminate'">
@@ -29,8 +27,7 @@
                 <a mat-list-item
                    [routerLink]="'/likes'">
                     <mat-icon matListIcon
-                              [matBadge]="this.likesListService.likesList.length"
-                              > favorite </mat-icon>
+                              [matBadge]="this.likesListService.likesList.length"> favorite </mat-icon>
                     追蹤清單
                 </a>
                 <a mat-list-item
