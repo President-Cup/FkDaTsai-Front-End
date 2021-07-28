@@ -31,24 +31,33 @@ export class UserService {
     return true;
   }
 
-  async signUp(name: string, email: string, password: string) {
+  async register(name: string, email: string, password: string) {
     let body = {
       name: name,
       email: email,
       password: password
     };
 
-    return this.http.post<User>(`${API_URL}/signup`, body)
-      .toPromise();
+    return this.http.post<User>(`${API_URL}/register`, body)
+      .toPromise()
+      .then((user) => this._user = user)
+      .then(() => this._isLogin = true);
   }
 
-  async signin(email: string, password: string) {
+  async signIn(email: string, password: string) {
     let body = {
       email: email,
       password: password
     };
 
-    return this.http.post<User>(`${API_URL}/signin`, body)
-      .toPromise();
+    return this.http.post<User>(`${API_URL}/sign-in`, body)
+      .toPromise()
+      .then((user) => this._user = user)
+      .then(() => this._isLogin = true);
+  }
+
+  logOut(): void {
+    this._isLogin = false;
+    this._user = undefined;
   }
 }
