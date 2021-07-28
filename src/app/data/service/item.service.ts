@@ -14,8 +14,13 @@ export class ItemService {
 
   constructor(private http: HttpClient) { }
 
-  async fetchNumberOfItems(category_name: [string, string]): Promise<number> {
-    return this.http.get<number>(`${this.itemUrl}?q=number&primary=${category_name[0]}&secondary=${category_name[1]}`)
+  async uploadItem(item: Item): Promise<number> {
+    return this.http.post<number>(`${this.itemUrl}/upload`, item)
+      .toPromise();
+  }
+
+  async fetchNumberOfItems(categoryName: [string, string]): Promise<number> {
+    return this.http.get<number>(`${this.itemUrl}?q=number&primary=${categoryName[0]}&secondary=${categoryName[1]}`)
       .toPromise();
   }
 
@@ -26,6 +31,16 @@ export class ItemService {
 
   async fetchItemIdList(category_name: [string, string], pageIndex: number, pageSize: number): Promise<number[]> {
     return this.http.get<number[]>(`${this.itemUrl}?q=list&category=${category_name}&page=${pageIndex}&per_page=${pageSize}`)
+      .toPromise();
+  }
+
+  async updateItem(item: Item): Promise<any> {
+    return this.http.put<any>(`${this.itemUrl}/update`, item)
+      .toPromise();
+  }
+
+  async removeItem(itemId: number): Promise<unknown> {
+    return this.http.delete(`${this.itemUrl}/${itemId}`)
       .toPromise();
   }
 }
